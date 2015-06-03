@@ -1,14 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
-import re, urllib
-import sys
-import random
 import json
 
 
 args = eval(str(sys.argv))
-if len(sys.argv) < 2:
+if len(sys.argv) < 3:
 	print "Incorrect Number of Arguments"
 	exit()
 query=""
@@ -19,13 +15,17 @@ for arg in args:
     if "-N=" in arg:
         N = arg.replace('-N=', '')
 
+    if "--pretty=" in arg:
+        pretty = arg.replace('--pretty=', '')
+
 class gScholarScraper(object):
 
-    def __init__(self, query, N):
+    def __init__(self, query, N, pretty):
         self.query = query
         self.google_scholar_url = "http://scholar.google.com/scholar"
         self.url = self.google_scholar_url+"?q="+query.replace(' ', '+')
-        self.N = N
+        self.N = N,
+        self.pretty = pretty
 
     def getContent(self, i):
         r = requests.get(self.url+'&start='+str(i*10))
@@ -77,8 +77,7 @@ class gScholarScraper(object):
             return ""
 
     def main(self):
-        papersList = dict()
-        j=0
+        papersList = list()
         for i in xrange(int(N)):
             content = self.getContent(i)
             soup = BeautifulSoup(content)
@@ -91,11 +90,13 @@ class gScholarScraper(object):
                 paperDict['authors'] = self.getAuthors(paper)
                 paperDict['abstract'] = self.getAbstract(paper)
                 paperDict['cited'] = self.getCited(paper)
-                papersList[j] = paperDict
-                j = j+1
-        print json.dumps(papersList, indent=4, separators=(',', ': '))
-        ## print json.dumps(papersList)
+                papersList.append(paperDict)
+        trues = ['true', '1', 1, 'True', 'TRUE']
+        if(pretty in trues):
+            print json.dumps(papersList, indent=4, separators=(',', ': '))
+        else:
+            print json.dumps(papersList)
             
 
-scholar = gScholarScraper(query, N)
+scholar = gScholarScraper(query, N, pretty)
 scholar.main()
