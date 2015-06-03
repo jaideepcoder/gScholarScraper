@@ -1,4 +1,6 @@
-# google-scholar-scrapper
+# gScholarScraper - Google Scholar Scraper
+
+A python library to scrape and parse Google Scholar and provide output in json format.
 
 ## Usage
 
@@ -21,19 +23,20 @@ Example:
     python gScholarScraper.py --query="Machine Learning" -N=1 --pretty=True
     
 Output:
-[
-    {
-        "url": "http://www.springerlink.com/index/rw3572714v41q507.pdf",
-        "abstract": "There is no a priori reason why machine learning must borro
-w from nature. A field could exist, complete with well-defined algorithms, data
-structures, and theories of learning, without once referring to organisms, cogni
-tive or genetic structures, and psychological or  ...",
-        "authors": "DE Goldberg, JH Holland - Machine learning, 1988 - Springer"
-,
-        "cited": "817",
-        "title": "Genetic algorithms and machine learning"
-    },
-    {
-      ...
-    }
-]
+
+    [
+        {
+            "url": "http://www.springerlink.com/index/rw3572714v41q507.pdf",
+            "abstract": "There is no a priori reason why machine learning must borro
+    w from nature. A field could exist, complete with well-defined algorithms, data
+    structures, and theories of learning, without once referring to organisms, cogni
+    tive or genetic structures, and psychological or  ...",
+            "authors": "DE Goldberg, JH Holland - Machine learning, 1988 - Springer"
+    ,
+            "cited": "817",
+            "title": "Genetic algorithms and machine learning"
+        },
+        {
+            ...
+        }
+    ]
